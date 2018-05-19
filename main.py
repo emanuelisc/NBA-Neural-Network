@@ -6,7 +6,8 @@ teamId = '1610612751'
 season = '2014-15'
 
 
-page = urllib.request.urlopen('https://nba.shop4dev.com/index.php?teamId=' + teamId + '&season=' + season)
+# page = urllib.request.urlopen('https://nba.shop4dev.com/index.php?teamId=' + teamId + '&season=' + season)
+page = urllib.request.urlopen('http://stats.nba.com/stats/teamgamelog?teamId=' + teamId + '&leagueId=00&season=' + season + '&seasonType=Regular%20Season&dateFrom=&dateTo=')
 byte = page.read()
 text = byte.decode("utf-8")
 text = text[1:]
