@@ -1,23 +1,24 @@
 import requests
 import json
-import urllib.request
+import urllib
 
 teamId = '1610612751'
 season = '2014-15'
 
+# To use data from API (PHP project on local server) ->
+# page = urllib.request.urlopen('http://localhost/nba/php/index.php?teamId=' + teamId + '&season=' + season)
+# byte = page.read()
+# text = byte.decode("utf-8")
+# text = text[1:] 
+# text = text[0:len(text)-1]+text[len(text):]
+# data = json.loads(text)
 
-# page = urllib.request.urlopen('https://nba.shop4dev.com/index.php?teamId=' + teamId + '&season=' + season)
-page = urllib.request.urlopen('http://stats.nba.com/stats/teamgamelog?teamId=' + teamId + '&leagueId=00&season=' + season + '&seasonType=Regular%20Season&dateFrom=&dateTo=')
-byte = page.read()
-text = byte.decode("utf-8")
-text = text[1:]
-text = text[0:len(text)-1]+text[len(text):]
-
-# # with open('data.json') as f:
-data = json.loads(text)
+# To use test data ->
+with open('data.json') as f:
+    data = json.load(f)
 
 results = data["resultSets"][0]["rowSet"]
-print(len(results))
+# print(len(results))php
 with open('preparedData.txt', 'w') as f:
     printData = ""
     for i in results:
