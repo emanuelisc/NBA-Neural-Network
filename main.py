@@ -10,6 +10,18 @@ from random import randint
 teamId = '1610612751'
 season = '2014-15'
 
+with open('teams.json') as f:
+    teamData = json.load(f)
+
+teams = dict()
+counter = 1
+for i in teamData:
+    teams[i["abbreviation"]] = counter
+    counter += 1
+teams["NJN"] = counter
+counter += 1
+teams["NOH"] = counter
+counter += 1
 # To use data from API (PHP project on local server) ->
 # page = urllib.request.urlopen('http://localhost/nba/php/index.php?teamId=' + teamId + '&season=' + season)
 # byte = page.read()
@@ -25,17 +37,11 @@ with open('data.json') as f:
 results = data["resultSets"][0]["rowSet"]
 # print(len(results))php
 
-training_set_inputs = []
-training_set_outputs = []
 with open('scores.txt', 'w') as f:
     printData = ""
     for i in range(len(results)):
-        if (i + 10) < len(results):
-            arr = []
-            for j in range(10):
-                arr.append(results[i+j][26])
-            training_set_outputs.append(results[i+10][26])
-            training_set_inputs.append(arr)
+        printData += str(teams[results[i][3][:3]]) + "\t"
+        printData += str(teams[results[i][3][-3:]]) + "\t"
         printData += str(results[i][26]) + "\t"
         if results[i][5] == "W":
             printData += str(results[i][26] - randint(0, 25))
