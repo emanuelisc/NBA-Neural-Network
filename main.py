@@ -1,9 +1,11 @@
 import requests
 import json
+from random import randint
 import urllib
-
+import numpy as np
 from urllib3.connectionpool import xrange
 from numpy import exp, array, random, dot
+from random import randint
 
 teamId = '1610612751'
 season = '2014-15'
@@ -27,7 +29,6 @@ training_set_inputs = []
 training_set_outputs = []
 with open('scores.txt', 'w') as f:
     printData = ""
-    counter = 1
     for i in range(len(results)):
         if (i + 10) < len(results):
             arr = []
@@ -35,26 +36,10 @@ with open('scores.txt', 'w') as f:
                 arr.append(results[i+j][26])
             training_set_outputs.append(results[i+10][26])
             training_set_inputs.append(arr)
-        printData += str(counter) + "\t"
-        printData += str(results[i][26])
+        printData += str(results[i][26]) + "\t"
+        if results[i][5] == "W":
+            printData += str(results[i][26] - randint(0, 25))
+        else:
+            printData += str(results[i][26] + randint(0, 25))
         printData += "\n"
-        counter += 1
     f.write(printData)
-
-training_set_outputs = array(training_set_outputs).T
-training_set_inputs = array(training_set_inputs)
-random.seed(1)
-synaptic_weights = 2 * random.random((10, 1)) - 1
-for iteration in range(72):
-    output = 1 / (1 + exp(-(dot(training_set_inputs, synaptic_weights))))
-
-    synaptic_weights += dot(training_set_inputs.T, (training_set_outputs[iteration]- output) * output * (1 - output))
-print (1 / (1 + exp(-(dot(array([78, 100, 100,  81, 104,  85,  87, 110, 93, 100]), synaptic_weights)))))
-
-# training_set_inputs = array([[0, 0, 1], [1, 1, 1], [1, 0, 1], [0, 1, 1]])
-# training_set_outputs = array([[0, 1, 1, 0]]).T
-# random.seed(1)
-# synaptic_weights = 2 * random.random((3, 1)) - 1
-# for iteration in xrange(10000):
-#     output = 1 / (1 + exp(-(dot(training_set_inputs, synaptic_weights))))
-#     synaptic_weights += dot(training_set_inputs.T, (training_set_outputs - output) * output * (1 - output))
