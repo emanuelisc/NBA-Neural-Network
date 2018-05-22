@@ -1,20 +1,20 @@
 import numpy as np
 
 # X = (team level, last 10 avarage score), y = won or lost
-X = np.array(([0.5, 50], [0.3, 86], [0.6, 80], [0.9, 90], [0.1, 30]), dtype=float)
-y = np.array(([0], [0], [1], [1], [0]), dtype=int)
-xPredicted = np.array(([0.9,90.0]), dtype=float)
+X = np.array(([1,2], [1, 3], [2, 3], [1, 2], [2,3]), dtype=int)
+y = np.array(([100, 52], [89, 85], [58, 89], [58,45], [78,87]), dtype=int)
+xPredicted = np.array(([2,3]), dtype=int)
 
 # scale units
 # X = X/np.amax(X, axis=0) # maximum of X array
 # xPredicted = xPredicted/np.amax(xPredicted, axis=0) # maximum of xPredicted (our input data for the prediction)
-# y = y/100 # max test score is 100
+y = y/100 # max test score is 100
 
 class Neural_Network(object):
   def __init__(self):
     #parameters
     self.inputSize = 2
-    self.outputSize = 1
+    self.outputSize = 2
     self.hiddenSize = 3
 
     #weights
