@@ -3,12 +3,26 @@ import numpy as np
 # X = (team level, last 10 avarage score), y = won or lost
 X = np.array(([1,2], [1, 3], [2, 3], [1, 2], [2,3]), dtype=int)
 y = np.array(([100, 52], [89, 85], [58, 89], [58,45], [78,87]), dtype=int)
-xPredicted = np.array(([2,3]), dtype=int)
+xPredicted = np.array(([1,15]), dtype=int)
 
+with open('scores.txt', 'r') as f:
+  array = [[int(x) for x in line.split()] for line in f]
+
+for i in array:
+  X = np.vstack([X, [i[0], i[1]]])
+
+  y = np.vstack([y, [i[2], i[3]]])
+
+max = np.amax(y)
 # scale units
 # X = X/np.amax(X, axis=0) # maximum of X array
 # xPredicted = xPredicted/np.amax(xPredicted, axis=0) # maximum of xPredicted (our input data for the prediction)
-y = y/100 # max test score is 100
+y = y/max # max test score is 100
+
+# PRINT TEAMS
+# print(X)
+# PRINT SCORES
+# print(y)
 
 class Neural_Network(object):
   def __init__(self):

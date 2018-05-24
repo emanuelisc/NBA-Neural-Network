@@ -37,12 +37,12 @@ with open('data.json') as f:
 results = data["resultSets"][0]["rowSet"]
 # print(len(results))php
 
-with open('scores.txt', 'w') as f:
+with open('network/scores.txt', 'w') as f:
     printData = ""
     for i in range(len(results)):
-        printData += str(teams[results[i][3][:3]]) + "\t"
-        printData += str(teams[results[i][3][-3:]]) + "\t"
-        printData += str(results[i][26]) + "\t"
+        printData += str(teams[results[i][3][:3]]) + " "
+        printData += str(teams[results[i][3][-3:]]) + " "
+        printData += str(results[i][26]) + " "
         if results[i][5] == "W":
             printData += str(results[i][26] - randint(0, 25))
         else:
