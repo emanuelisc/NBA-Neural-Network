@@ -129,7 +129,7 @@ def reduceData(team1, team2):
     print(team1)
     newArray = []
     for i in array:
-        if i[0] == int(team1) or int(i[0]) == team2:
+        if i[0] == int(team1) or i[0] == int(team2):
             newArray.append([i[0], i[1], i[2], i[3]])
 
     # removing GameID
