@@ -1,11 +1,11 @@
 import numpy as np
 
-# X = (team level, last 10 avarage score), y = won or lost
+# # X = (team level, last 10 avarage score), y = won or lost
 X = np.array(([1,2], [1, 3], [2, 3], [1, 2], [2,3]), dtype=int)
 y = np.array(([100, 52], [89, 85], [58, 89], [58,45], [78,87]), dtype=int)
-xPredicted = np.array(([1,15]), dtype=int)
+xPredicted = np.array(([1,3]), dtype=int)
 
-with open('scores.txt', 'r') as f:
+with open('data.txt', 'r') as f:
   array = [[int(x) for x in line.split()] for line in f]
 
 for i in array:
@@ -75,15 +75,19 @@ class Neural_Network(object):
     print ("Input (scaled): \n" + str(xPredicted))
     print ("Output: \n" + str(self.forward(xPredicted)))
 
-NN = Neural_Network()
-for i in range(1000): # trains the NN 1,000 times
-  # print ("# " + str(i) + "\n")
-  # print ("Input (scaled): \n" + str(X))
-  # print ("Actual Output: \n" + str(y))
-  # print ("Predicted Output: \n" + str(NN.forward(X)))
-  # print ("Loss: \n" + str(np.mean(np.square(y - NN.forward(X))))) # mean sum squared loss
-  # print ("\n")
-  NN.train(X, y)
 
-NN.saveWeights()
-NN.predict()
+
+def trainNetwork():
+  NN = Neural_Network()
+  for i in range(1000): # trains the NN 1,000 times
+    # print ("# " + str(i) + "\n")
+    # print ("Input (scaled): \n" + str(X))
+    # print ("Actual Output: \n" + str(y))
+    # print ("Predicted Output: \n" + str(NN.forward(X)))
+    # print ("Loss: \n" + str(np.mean(np.square(y - NN.forward(X))))) # mean sum squared loss
+    # print ("\n")
+    NN.train(X, y)
+  NN.saveWeights()    
+  NN.predict()
+
+# trainNetwork()

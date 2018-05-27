@@ -1,51 +1,46 @@
-import requests
-import json
-from random import randint
-import urllib
-import numpy as np
-from urllib3.connectionpool import xrange
-from numpy import exp, array, random, dot
-from random import randint
+from network.data import getDataFromFile, getDataFromApi, fixDuplicates, reduceData
+from network.back import trainNetwork
 
-teamId = '1610612751'
-season = '2014-15'
+def testas():
+    print("testas")
 
-with open('teams.json') as f:
-    teamData = json.load(f)
+def greeting():
+    print("Sveiki atvykę į NBA rungtynių prognozavimo programą!\n\n")
+    print("Toliau pasirinkite, kokius veiksmus norite atlikti:\n")
 
-teams = dict()
-counter = 1
-for i in teamData:
-    teams[i["abbreviation"]] = counter
-    counter += 1
-teams["NJN"] = counter
-counter += 1
-teams["NOH"] = counter
-counter += 1
-# To use data from API (PHP project on local server) ->
-# page = urllib.request.urlopen('http://localhost/nba/php/index.php?teamId=' + teamId + '&season=' + season)
-# byte = page.read()
-# text = byte.decode("utf-8")
-# text = text[1:] 
-# text = text[0:len(text)-1]+text[len(text):]
-# data = json.loads(text)
+def main():
+    print("\n\n1. Nuskaityti duomenis iš API")
+    print("2. Nuskaityti duomenis iš failo")
+    print("3. Surūšiuoti API duomenis")
+    print("4. Sumažinti duomenų dimensijas")
+    print("5. Apmokyti\n")
 
-# To use test data ->
-with open('data.json') as f:
-    data = json.load(f)
+    var = input("Įveskite pasirinkimą: ")
+    selection = str(var)
+    if selection == "1":
+        getDataFromApi()
+        main()
+    elif selection == "2":
+        getDataFromFile()
+        main()
+    elif selection == "3":
+        fixDuplicates()
+        main()
+    elif selection == "4":
+        print("Įveskite pirmos komandos indeksą")
+        ind1 = input("Pirmos komandos indeksas: ")
+        print("Įveskite antros komandos indeksą")
+        ind2 = input("Antros komandos indeksas: ")
+        reduceData(ind1, ind2)
+        main()
+    elif selection == "5":
+        trainNetwork()
+        main()
+    else:
+        print("Neteisingas pasirinkimas")
+        main()
 
-results = data["resultSets"][0]["rowSet"]
-# print(len(results))php
 
-with open('network/scores.txt', 'w') as f:
-    printData = ""
-    for i in range(len(results)):
-        printData += str(teams[results[i][3][:3]]) + " "
-        printData += str(teams[results[i][3][-3:]]) + " "
-        printData += str(results[i][26]) + " "
-        if results[i][5] == "W":
-            printData += str(results[i][26] - randint(0, 25))
-        else:
-            printData += str(results[i][26] + randint(0, 25))
-        printData += "\n"
-    f.write(printData)
+if __name__ == "__main__":
+    greeting()
+    main()
