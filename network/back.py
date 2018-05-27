@@ -6,18 +6,19 @@ TrainingResults = np.array(([100, 72]), dtype=int)
 xTest = np.array(([1,2]), dtype=int)
 xResults = np.array(([100,72]), dtype=int)
 
-with open('allData.txt', 'r') as f:
+with open('datat1t2.txt', 'r') as f:
   array = [[int(x) for x in line.split()] for line in f]
 counter = 0
 for i in array:
-  if counter < len(array) / 10:
+  if counter % 10 == 0:
     xTest = np.vstack([xTest, [i[0], i[1]]])
     xResults = np.vstack([xResults, [i[2], i[3]]])
   X = np.vstack([TrainingData, [i[0], i[1]]])
   y = np.vstack([TrainingResults, [i[2], i[3]]])
   counter += 1
 
-max = np.amax(y)
+max = np.amax(TrainingResults) + 100
+realmax = np.amax(TrainingResults)
 # scale units
 # X = X/np.amax(X, axis=0) # maximum of X array
 # xPredicted = xPredicted/np.amax(xPredicted, axis=0) # maximum of xPredicted (our input data for the prediction)
@@ -33,7 +34,7 @@ class Neural_Network(object):
     #parameters
     self.inputSize = 2
     self.outputSize = 2
-    self.hiddenSize = 3
+    self.hiddenSize = 2
 
     #weights
     self.W1 = np.random.randn(self.inputSize, self.hiddenSize) # (3x2) weight matrix from input to hidden layer
@@ -78,13 +79,16 @@ class Neural_Network(object):
     rightCounter = 0
     for i in range(len(xTest)):
       # print("Predicted data based on trained weights: ")
-      print("Input (scaled): \n" + str(xTest[i]))
-      print("ActualResults :\n" + str(xResults[i]))
+      print(str(xTest[i]))
+
+      print(str(xResults[i]))
       output = self.forward(xTest[i])
-      print("Output: \n" + str(output))
-      if output[0] > output[1] and xResults[i][0] < xResults[i][1]:
+      print([output[0] * realmax + 50, output[1] * realmax + 50])
+      # self.backward(xTest[i], xResults[i], output)
+      # print(str(output))
+      if output[0] < output[1] and xResults[i][0] < xResults[i][1]:
         rightCounter += 1
-      elif output[0] < output[1] and xResults[i][0] > xResults[i][1]:
+      elif output[0] > output[1] and xResults[i][0] > xResults[i][1]:
         rightCounter += 1
     print("Accuracy: " + str(rightCounter / len(xTest)))
 
@@ -99,8 +103,8 @@ def trainNetwork():
     # print ("Predicted Output: \n" + str(NN.forward(X)))
     # print ("Loss: \n" + str(np.mean(np.square(y - NN.forward(X))))) # mean sum squared loss
     # print ("\n")
-    NN.train(X, y)
+    NN.train(TrainingData, TrainingResults)
     NN.saveWeights()
   NN.predict()
 
-# trainNetwork()
+trainNetwork()
