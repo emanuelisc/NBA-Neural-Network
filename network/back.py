@@ -3,7 +3,29 @@ import numpy as np
 # X = (team level, last 10 avarage score), y = won or lost
 X = np.array(([1,2], [1, 3], [2, 3], [1, 2], [2,3]), dtype=int)
 y = np.array(([100, 52], [89, 85], [58, 89], [58,45], [78,87]), dtype=int)
-xPredicted = np.array(([1,15]), dtype=int)
+xPredicted1 = np.array(([1,3]), dtype=int)
+xResult1 = np.array(([89,85]), dtype=int)
+# 1 9 104 115
+xPredicted2 = np.array(([1,9]), dtype=int)
+xResult2 = np.array(([104,115]), dtype=int)
+# 1 8 90 110
+xPredicted3 = np.array(([1,8]), dtype=int)
+xResult3 = np.array(([90,110]), dtype=int)
+# 1 16 93 93
+xPredicted4 = np.array(([1,16]), dtype=int)
+xResult4 = np.array(([93,93]), dtype=int)
+# 1 23 93 113
+xPredicted5 = np.array(([1,23]), dtype=int)
+xResult5 = np.array(([93,113]), dtype=int)
+# 1 7 93 98
+xPredicted6 = np.array(([1,7]), dtype=int)
+xResult6 = np.array(([93,98]), dtype=int)
+# 1 6 100 121
+xPredicted7 = np.array(([1,6]), dtype=int)
+xResult7 = np.array(([100,121]), dtype=int)
+# 1 30 83 108
+xPredicted8 = np.array(([1,30]), dtype=int)
+xResult8 = np.array(([83,108]), dtype=int)
 
 with open('scores.txt', 'r') as f:
   array = [[int(x) for x in line.split()] for line in f]
@@ -70,10 +92,11 @@ class Neural_Network(object):
     np.savetxt("w1.txt", self.W1, fmt="%s")
     np.savetxt("w2.txt", self.W2, fmt="%s")
 
-  def predict(self):
-    print ("Predicted data based on trained weights: ")
-    print ("Input (scaled): \n" + str(xPredicted))
-    print ("Output: \n" + str(self.forward(xPredicted)))
+  def predict(self, prediction, result):
+    print (str(prediction))
+    print(str(result))
+    output = self.forward(prediction)
+    print (str([output[0] * max, output[1] * max]))
 
 NN = Neural_Network()
 for i in range(1000): # trains the NN 1,000 times
@@ -86,4 +109,12 @@ for i in range(1000): # trains the NN 1,000 times
   NN.train(X, y)
 
 NN.saveWeights()
-NN.predict()
+# NN.predict(xPredicted1, xResult1)
+# NN.predict(xPredicted2, xResult2)
+# NN.predict(xPredicted3, xResult3)
+# NN.predict(xPredicted4, xResult4)
+# NN.predict(xPredicted5, xResult5)
+# NN.predict(xPredicted6, xResult6)
+# NN.predict(xPredicted7, xResult7)
+NN.predict(xPredicted8, xResult8)
+
